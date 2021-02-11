@@ -1,7 +1,8 @@
 <template>
   <div class="VueToNuxtLogo">
     <img src="~/assets/logo.png" alt="">
-    <p class="">Quality Assurance Department</p>
+    
+    <p class="title primary--text font-italic" >For the Quality Assurance Department</p>
   </div>
 </template>
 
