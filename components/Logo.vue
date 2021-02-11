@@ -1,9 +1,7 @@
 <template>
   <div class="VueToNuxtLogo">
-    <div class="Triangle Triangle--two" />
-    <div class="Triangle Triangle--one" />
-    <div class="Triangle Triangle--three" />
-    <div class="Triangle Triangle--four" />
+    <img src="~/assets/logo.png" alt="">
+    <p class="">Quality Assurance Department</p>
   </div>
 </template>
 
@@ -14,8 +12,7 @@
   transform: rotateX(180deg);
   position: relative;
   overflow: hidden;
-  height: 180px;
-  width: 245px;
+
 }
 
 .Triangle {
