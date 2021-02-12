@@ -11,6 +11,9 @@
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
+      <v-spacer></v-spacer>
+      <span class="subtitle-1"> Built with <span style="color: #ffffff; font-size: 15px;">&#9829; </span> by Steve</span>
+      <v-spacer></v-spacer>
     </v-footer>
   </v-app>
 </template>
