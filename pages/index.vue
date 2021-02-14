@@ -1,6 +1,14 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <v-alert
+      dense
+      outlined
+      type="error"
+      v-if="$nuxt.isOffline"
+    >
+      You are offline! Check your internet connection.
+    </v-alert>
       <div class="text-center">
         <logo />
       </div>
@@ -33,7 +41,8 @@
       color="white"
       v-if="uploading"
     >
-      <strong>Please wait....</strong>
+      <strong v-if="uploadProgress >=100">Please wait....</strong>
+      <strong v-else>{{uploadProgress}} %</strong>
     </v-progress-linear>
         </v-card-text>
         <v-card-actions class="">
@@ -57,6 +66,19 @@
       </v-icon>
             Download
         </v-btn>
+        
+
+
+        <v-btn v-if="downloaded" color="info" @click="$router.go(0)">
+            <v-icon
+        right
+        dark
+      >
+        mdi-refresh
+      </v-icon>
+            Refresh App
+        </v-btn>
+        
           <v-spacer/>
         </v-card-actions>
       </v-card>
@@ -77,7 +99,8 @@ export default {
     completed: false,
     file: null,
     result: null,
-    filename:null
+    filename:null,
+    downloaded: false
   }),
   components: {
     Logo,
@@ -115,6 +138,7 @@ export default {
 
   downloadFile() {
 
+    this.downloaded = true;
     let filename = this.filename? this.filename: 'converted file'
     FileUpload(this.result, `${this.filename}.xlsx`)
   }
