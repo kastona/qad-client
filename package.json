@@ -9,10 +9,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/axios": "5.11.0",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.8.3",
-    "nuxt": "^2.14.12"
+    "js-file-download": "^0.4.12",
+    "nuxt": "^2.14.12",
+    "request-multipart": "^1.0.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3"

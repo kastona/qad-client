@@ -45,7 +45,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL:'http://localhost:4000'
+    baseURL:'https://qad.herokuapp.com/'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
