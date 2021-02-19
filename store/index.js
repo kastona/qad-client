@@ -22,7 +22,7 @@ export const state = () => ({
   export const actions = {
   
    
-    async uploadFile(vuexContext, file) {
+    async uploadFile(vuexContext, arg) {
       let axiosConfig = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -32,9 +32,16 @@ export const state = () => ({
         
       }
   
+      let endpoint = 'https://qad.herokuapp.com/files'
+      if(arg.readText) {
+        delete axiosConfig.responseType
+        endpoint = 'https://qad.herokuapp.com/read'
+      }
       
-      const res = await this.$axios.$post('/files', file, axiosConfig)
+      console.log(arg.readText)
+      const res = await this.$axios.$post(endpoint, arg.file, axiosConfig)
   
+      console.log(res)
       return res
     }
   }

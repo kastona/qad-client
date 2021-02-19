@@ -14,9 +14,15 @@
       </div>
       <v-card>
         <v-card-title class="headline ">
-          Convert Printed Tables to Excel Worksheets.
+          <v-switch
+      v-model="readText"
+      
+    ></v-switch>
+          <span v-if="readText">Extract Text From Images</span>
+          <span v-else>Convert Printed Tables to Excel Worksheets.</span>
         </v-card-title>
         <v-card-text >
+        
           <v-file-input
             v-if="!uploading && !completed" 
             v-model="file"
@@ -24,6 +30,7 @@
           ></v-file-input>
 
           <v-text-field
+            v-if="!readText"
             label="File Name"
             outlined
             v-model="filename"
@@ -32,7 +39,10 @@
           <v-alert
           v-if="completed"
              type="success"
-          >All done! You can now download your file!</v-alert>
+          >
+          <span v-if="readText">Yay! Click below to copy the text</span>
+          <span v-else>All done! You can now download your file!</span>
+          </v-alert>
 
   <v-progress-linear
       height="25"
@@ -45,19 +55,20 @@
       <strong v-else>{{uploadProgress}} %</strong>
     </v-progress-linear>
         </v-card-text>
-        <v-card-actions class="">
+
+        <v-card-actions  class="">
           <v-spacer/>
           <v-btn
             color="primary"
             nuxt
             :disabled=" uploading || !file"
-            v-if="!completed"
+            v-if="!completed "
 
             @click="handleUpload"
           >
             Load File
           </v-btn>
-          <v-btn v-else color="info" @click="downloadFile">
+          <v-btn v-if="completed && !readText" color="info" @click="downloadFile">
             <v-icon
         right
         dark
@@ -66,6 +77,19 @@
       </v-icon>
             Download
         </v-btn>
+        
+
+
+      <v-btn v-if="completed && readText" color="info" @click="copyText">
+            <v-icon
+        right
+        dark
+      >
+        mdi-download
+      </v-icon>
+            Copy Text
+        </v-btn>
+
         
 
 
@@ -91,6 +115,7 @@ import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import {mapGetters, mapActions} from 'vuex'
 import FileUpload from 'js-file-download'
+import copy from 'copy-to-clipboard';
 
 export default {
   data: ()=> ({
@@ -100,7 +125,9 @@ export default {
     file: null,
     result: null,
     filename:null,
-    downloaded: false
+    downloaded: false,
+    readText: false,
+    showTextField: false
   }),
   components: {
     Logo,
@@ -119,13 +146,7 @@ export default {
         const formData = new FormData();
         formData.append('file', this.file)
         formData.append('filename', this.filename)
-        this.result = await this.uploadFile(formData); //this.$axios.post('/files', formData, axiosConfig)
-
-      
-      
-      
-      console.log(this.file)
-        
+        this.result = await this.uploadFile({file: formData, readText: this.readText}); //this.$axios.post('/files', formData, axiosConfig)
 
         this.uploading = false;
         this.completed = true;
@@ -140,13 +161,38 @@ export default {
 
     this.downloaded = true;
     let filename = this.filename? this.filename: 'converted file'
-    FileUpload(this.result, `${this.filename}.xlsx`)
+
+
+
+    if(this.readText) {
+      this.showTextField = true;
+
+    }else {
+      FileUpload(this.result, `${this.filename}.xlsx`)
+    }
+
+  },
+
+  copyText() {
+    this.downloaded = true;
+    copy(this.myResult)
   }
+
+
   },
   computed: {
       ...mapGetters({
         uploadProgress: 'getUploadProgress'
-      })
+      }),
+
+      myResult() {
+        if(this.readText && this.result) {
+          return this.result[0]
+          
+        }else {
+          return ''
+        }
+      }
     }
 }
 </script>

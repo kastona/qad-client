@@ -11,6 +11,7 @@
   "dependencies": {
     "@nuxtjs/axios": "5.11.0",
     "@nuxtjs/pwa": "^3.3.5",
+    "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.3",
     "js-file-download": "^0.4.12",
     "nuxt": "^2.14.12",
