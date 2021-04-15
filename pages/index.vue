@@ -30,7 +30,6 @@
           ></v-file-input>
 
           <v-text-field
-            v-if="!readText"
             label="File Name"
             outlined
             v-model="filename"
@@ -40,15 +39,14 @@
           v-if="completed"
              type="success"
           >
-          <span v-if="readText">Yay! Click below to copy the text</span>
-          <span v-else>All done! You can now download your file!</span>
+          <span >All done! You can now download your file!</span>
           </v-alert>
 
   <v-progress-linear
       height="25"
       v-model="uploadProgress"
       :indeterminate="uploadProgress >=100"
-      color="white"
+      color="success"
       v-if="uploading"
     >
       <strong v-if="uploadProgress >=100">Please wait....</strong>
@@ -68,7 +66,7 @@
           >
             Load File
           </v-btn>
-          <v-btn v-if="completed && !readText" color="info" @click="downloadFile">
+          <v-btn v-if="completed" color="info" @click="downloadFile">
             <v-icon
         right
         dark
@@ -80,17 +78,7 @@
         
 
 
-      <v-btn v-if="completed && readText" color="info" @click="copyText">
-            <v-icon
-        right
-        dark
-      >
-        mdi-download
-      </v-icon>
-            Copy Text
-        </v-btn>
-
-        
+     
 
 
         <v-btn v-if="downloaded" color="info" @click="$router.go(0)">
@@ -160,16 +148,13 @@ export default {
   downloadFile() {
 
     this.downloaded = true;
-    let filename = this.filename? this.filename: 'converted file'
+    let name = this.filename? this.filename: 'converted file'
 
 
 
-    if(this.readText) {
-      this.showTextField = true;
-
-    }else {
-      FileUpload(this.result, `${this.filename}.xlsx`)
-    }
+    
+      FileUpload(this.result, `${name + this.readText? '.txt': '.xlsx'}`)
+  
 
   },
 
