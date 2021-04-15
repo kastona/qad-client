@@ -170,14 +170,6 @@ export default {
         uploadProgress: 'getUploadProgress'
       }),
 
-      myResult() {
-        if(this.readText && this.result) {
-          return this.result[0]
-          
-        }else {
-          return ''
-        }
-      }
     }
 }
 </script>
