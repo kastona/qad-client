@@ -32,9 +32,9 @@ export const state = () => ({
         
       }
   
-      let endpoint = 'https://qad.herokuapp.com/files'
+      let endpoint = 'http://localhost:4000/files'
       if(arg.readText) {
-        endpoint = 'https://qad.herokuapp.com/read'
+        endpoint = 'http://localhost:4000/read'
       }
       
       const res = await this.$axios.$post(endpoint, arg.file, axiosConfig)

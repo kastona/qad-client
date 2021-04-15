@@ -75,11 +75,6 @@
       </v-icon>
             Download
         </v-btn>
-        
-
-
-     
-
 
         <v-btn v-if="downloaded" color="info" @click="$router.go(0)">
             <v-icon
@@ -148,21 +143,14 @@ export default {
   downloadFile() {
 
     this.downloaded = true;
-    let name = this.filename? this.filename: 'converted file'
 
-
-
-    
-      FileUpload(this.result, `${name + this.readText? '.txt': '.xlsx'}`)
-  
+    let name = this.filename + (this.readText? '.txt': '.xlsx')
+    console.log(name)
+      FileUpload(this.result, name)
 
   },
 
-  copyText() {
-    this.downloaded = true;
-    copy(this.myResult)
-  }
-
+ 
 
   },
   computed: {
