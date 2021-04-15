@@ -34,14 +34,11 @@ export const state = () => ({
   
       let endpoint = 'https://qad.herokuapp.com/files'
       if(arg.readText) {
-        delete axiosConfig.responseType
         endpoint = 'https://qad.herokuapp.com/read'
       }
       
-      console.log(arg.readText)
       const res = await this.$axios.$post(endpoint, arg.file, axiosConfig)
   
-      console.log(res)
       return res
     }
   }
